@@ -18,25 +18,35 @@ const addEmployee = async (req, res) => {
         message: "Employee is already exists with this Email",
       });
     }
-    const createEmployee = await Employee.create(
-      { name, email, age, salary }
-      //   {
-      //     fields: ["email", "age"]
-      //   }
-    );
-    console.log(createEmployee.toJSON());
-    console.log(JSON.stringify(createEmployee, null, 4));
-    if (!createEmployee) {
-      return res.status(409).json({
-        status: 409,
-        message: "Something went wrong",
-      });
-    }
+    // with instance 
+    const jane = Employee.build({ name, email, age, salary });
+    console.log("===",jane instanceof Employee);
+    await jane.save();
+    console.log("====", jane.dataValues);
+    
+
+    // with create method
+    // const createEmployee = await Employee.create(
+    //   { name, email, age, salary }
+    //   //   {
+    //   //     fields: ["email", "age"]
+    //   //   }
+    // );
+    
+    // console.log(createEmployee.toJSON());
+    // console.log(JSON.stringify(createEmployee, null, 4));
+
+    // if (!createEmployee) {
+    //   return res.status(409).json({
+    //     status: 409,
+    //     message: "Something went wrong",
+    //   });
+    // }
 
     return res.status(200).json({
       status: 200,
       message: "Employee added successfully",
-      data: createEmployee,
+      data: jane,
     });
   } catch (error) {
     console.log("Error in addEmployee", error);
@@ -79,13 +89,13 @@ const getAll = async (req, res) => {
     //----------------conditions-----------------
     //where
     const findAll = await Employee.findOne({
-    //   where: {
-    //     id: { [Op.eq]: 1 }, 
-    //     email: { [Op.like]: '%@gmail.com'}
-    //   },
+      //   where: {
+      //     id: { [Op.eq]: 1 },
+      //     email: { [Op.like]: '%@gmail.com'}
+      //   },
 
-    where :{
-        // [Op.and]: [{id:1}, {name: "tesy"}],// will retunr null 
+      where: {
+        // [Op.and]: [{id:1}, {name: "tesy"}],// will retunr null
         // [Op.or]: [{id: 1}, {name: "test"}] // will retrun some
         // id: {
         //     [Op.or]: [20, 23],
@@ -96,10 +106,8 @@ const getAll = async (req, res) => {
 
         //is
 
-        id:{[Op.is]:1}
-        
-    }
-     
+        id: { [Op.is]: 1 },
+      },
     });
     return res.status(200).json({
       status: 200,
