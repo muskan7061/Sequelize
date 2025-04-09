@@ -12,13 +12,11 @@ Employee.init(
         },
         email:{
             type:DataTypes.STRING,
-            unique: true,
             allowNull: false,
-            validate:{
-                isEmail: true
-            }
-            
-            
+            unique: true,
+            // validate:{
+            //     isEmail: true
+            // }
         },
         age:{
             type:DataTypes.INTEGER,
@@ -36,18 +34,16 @@ Employee.init(
                 len: [6,10]
             }
         }
-
     }, 
    
     {
         sequelize,
         modelName: "Employee",
-        freezeTableName: true,
-        tableName: "userEmploye"
+        tableName:"employees"
     }
 )
 
 
 module.exports = Employee
 
-console.log(Employee === sequelize.models.Todo);
+// console.log(Employee === sequelize.models.Todo);

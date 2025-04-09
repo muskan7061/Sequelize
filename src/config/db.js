@@ -16,4 +16,4 @@ sequelize.authenticate()
 .catch(() => console.log("Fialed connect to MYSQL"))
 
 
-module.exports = sequelize
+module.exports = sequelize 
