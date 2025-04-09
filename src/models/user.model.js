@@ -1,5 +1,5 @@
 const {DataTypes, Model} = require("sequelize")
-const sequelize = require("../congif/db")
+const sequelize = require("../config/db")
 
 
 class Employee extends Model {}
@@ -13,7 +13,12 @@ Employee.init(
         email:{
             type:DataTypes.STRING,
             unique: true,
-            allowNull: false
+            allowNull: false,
+            validate:{
+                isEmail: true
+            }
+            
+            
         },
         age:{
             type:DataTypes.INTEGER,
@@ -23,12 +28,22 @@ Employee.init(
             type:DataTypes.INTEGER,
             allowNull: false
         },
+        password:{
+            type:DataTypes.STRING,
+            allowNull: false,
+            validate:{
+                is: /^[0-9a-z!@#$%^&*()]{10}$/i,
+                len: [6,10]
+            }
+        }
 
     }, 
    
     {
         sequelize,
         modelName: "Employee",
+        freezeTableName: true,
+        tableName: "userEmploye"
     }
 )
 

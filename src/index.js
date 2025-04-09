@@ -1,8 +1,10 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const bodyParser = require("body-parser")
-const sequelize = require("./congif/db")
+const sequelize = require("./config/db")
 const userRouter = require("./routes/users.route")
+const  studentRouter  = require("./routes/student.route")
+require("./models/index")
 dotenv.config({path: "./.env"})
 const app = express()
 
@@ -13,7 +15,9 @@ app.use(express.urlencoded({extended: true}))
 
 app.use("/api/v1/users", userRouter)
 
-sequelize.sync()
+app.use("/api/v1/users", studentRouter)
+
+sequelize.sync({ force: true })
 .then(() =>{
     console.log("Sync successfully")
     app.listen(process.env.PORT, () =>{

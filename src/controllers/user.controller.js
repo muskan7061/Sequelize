@@ -1,11 +1,11 @@
 const Employee = require("../models/user.model");
-const { sequelize } = require("../congif/db");
+const { sequelize } = require("../config/db");
 const { Sequelize, Op } = require("sequelize");
 
 const addEmployee = async (req, res) => {
   try {
-    const { name, email, age, salary } = req.body;
-    if ([name, email, age, salary].some((data) => data.trim() === "")) {
+    const { name, email, age, salary, password } = req.body;
+    if ([name, email, age, salary, password].some((data) => data.trim() === "")) {
       return res.status(409).json({
         status: 409,
         message: "All fielda are required",
@@ -18,21 +18,56 @@ const addEmployee = async (req, res) => {
         message: "Employee is already exists with this Email",
       });
     }
-    // with instance 
-    const jane = Employee.build({ name, email, age, salary });
-    console.log("===",jane instanceof Employee);
-    await jane.save();
-    console.log("====", jane.dataValues);
-    
 
+    //-1
+    // with instance
+    // const jane = Employee.build({ name, email, age, salary });
+    // console.log("===", jane instanceof Employee);
+    // await jane.save();
+
+    //-2
+    // same work
+    // console.log("dataValues", jane.dataValues);
+    // console.log("toJsone", jane.toJSON());
+
+    //-3
+    // one column ko  exctract
+    // console.log("name", jane.name);
+
+    //-4
+    // will update name in database
+    // jane.name = "muskan"
+    // await jane.save()
+
+    //-5
+    // update several fields at once with  set method
+    // jane.set({
+    //   name: "niraj",
+    //   age: 33,
+    //   salary: "909090"
+    // })
+    // await jane.save()
+
+    //-6
+    // delete instance
+    // await jane.destroy
+
+    //-7 reload instnce
+    // await jane.reload();
+    // console.log(jane.name); 
+
+    //-8
     // with create method
-    // const createEmployee = await Employee.create(
-    //   { name, email, age, salary }
-    //   //   {
-    //   //     fields: ["email", "age"]
-    //   //   }
-    // );
-    
+    const createEmployee = await Employee.create(
+      { name, email, age, salary , password}
+      //   {
+      //     fields: ["email", "age"]
+      //   }
+    );
+
+    // const incrementData = await createEmployee.increment("age", {by: 2})
+
+    //--9
     // console.log(createEmployee.toJSON());
     // console.log(JSON.stringify(createEmployee, null, 4));
 
@@ -46,7 +81,7 @@ const addEmployee = async (req, res) => {
     return res.status(200).json({
       status: 200,
       message: "Employee added successfully",
-      data: jane,
+      data: createEmployee,
     });
   } catch (error) {
     console.log("Error in addEmployee", error);
@@ -60,6 +95,7 @@ const addEmployee = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
+    
     //1
     // const findAll = await Employee.findOne({where: {id:2}}) // findAll
 
@@ -88,13 +124,13 @@ const getAll = async (req, res) => {
 
     //----------------conditions-----------------
     //where
-    const findAll = await Employee.findOne({
+    // const findAll = await Employee.findOne({
       //   where: {
       //     id: { [Op.eq]: 1 },
       //     email: { [Op.like]: '%@gmail.com'}
       //   },
 
-      where: {
+      // where: {
         // [Op.and]: [{id:1}, {name: "tesy"}],// will retunr null
         // [Op.or]: [{id: 1}, {name: "test"}] // will retrun some
         // id: {
@@ -106,12 +142,32 @@ const getAll = async (req, res) => {
 
         //is
 
-        id: { [Op.is]: 1 },
-      },
-    });
+        // id: { [Op.is]: 1 },
+      // },
+    // });
+
+    //1 findbyPK 
+    //const findbyPK = await Employee.findByPk(1)
+
+    //2 findorCreate
+    // const findbyPK = await Employee.findOrCreate({
+    //   where: {name: "shabna"},
+    //   defaults:{
+    //     name: "john",
+    //     email: "john@gmail.com",
+    //     age: 22,
+    //     salary: 22222
+    //   }
+    // })
+    //3 finorcountall
+    //     const finorcountall = await Employee.findAndCountAll({
+    //         where:{ salary:{ [Op.gt]: 1000}},
+    //         limit: 50,
+    //         offset: 0 
+    // })
     return res.status(200).json({
       status: 200,
-      data: findAll,
+      data: finorcountall,
       message: "fetched all successfully",
     });
   } catch (error) {
