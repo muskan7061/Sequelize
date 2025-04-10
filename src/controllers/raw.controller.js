@@ -10,18 +10,18 @@ const user = async (req, res) => {
     //     replacements: {age : 50},
     //     type: sequelize.QueryTypes.SELECT
     // })
-    const result = await sequelize.query('SELECT name, city FROM raws LIMIT 5',{
-        type: sequelize.QueryTypes.SELECT
-    })
-    console.log(result);
+    // const result = await sequelize.query('SELECT name, city FROM raws LIMIT 5',{
+    //     type: sequelize.QueryTypes.SELECT
+    // })
+    // console.log(result);
     // console.log("METADATA", metadata);
 
     //--2 INSERT QUERY
-    // const [result, metadata] = await sequelize.query('INSERT INTO Raws (name , age) VALUES (?,?)',{
-    //     replacements: ["muskan", 11],
-    //     type: sequelize.QueryTypes.INSERT
-    // })
-    // console.log(result);
+    const result = await sequelize.query('INSERT INTO Raws (name , age, city, marks, subject) VALUES (?,?,?,?,?)',{
+        replacements: ["muskan", 11, "surat", 44,"data"],
+        type: sequelize.QueryTypes.INSERT
+    })
+    console.log(result);
     // console.log("METADATA", metadata);
 
 

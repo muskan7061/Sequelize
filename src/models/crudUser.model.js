@@ -2,9 +2,9 @@ const {DataTypes, Model} = require("sequelize")
 const sequelize = require("../config/db")
 
 
-class Employee extends Model {}
+class CrudUser extends Model {}
 
-Employee.init(
+CrudUser.init(
     {
         name:{
             type:DataTypes.STRING,
@@ -13,7 +13,7 @@ Employee.init(
         email:{
             type:DataTypes.STRING,
             allowNull: false,
-            unique: true,
+            // unique: true,
             // validate:{
             //     isEmail: true
             // }
@@ -29,21 +29,24 @@ Employee.init(
         password:{
             type:DataTypes.STRING,
             allowNull: false,
-            validate:{
-                is: /^[0-9a-z!@#$%^&*()]{10}$/i,
-                len: [6,10]
-            }
+            // validate:{
+            //     is: /^[0-9a-z!@#$%^&*()]{10}$/i,
+            //     len: [6,10]
+            // }
         }
     }, 
    
     {
         sequelize,
-        modelName: "Employee",
-        tableName:"employees"
+        timestamps: true,
+        paranoid: true,
+        deletedAt: "deletedCrud"
+
+      
     }
 )
 
 
-module.exports = Employee
+module.exports = CrudUser
 
 // console.log(Employee === sequelize.models.Todo);

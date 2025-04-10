@@ -1,23 +1,23 @@
-const Employee = require("../models/user.model");
-const { sequelize } = require("../config/db");
-const { Sequelize, Op } = require("sequelize");
+const CrudUser = require("../models/crudUser.model");
+// const { sequelize } = require("../config/db");
+// const { Sequelize, Op } = require("sequelize");
 
-const addEmployee = async (req, res) => {
+const add = async (req, res) => {
   try {
     const { name, email, age, salary, password } = req.body;
-    if ([name, email, age, salary, password].some((data) => data.trim() === "")) {
-      return res.status(409).json({
-        status: 409,
-        message: "All fielda are required",
-      });
-    }
-    const findExistEmployee = await Employee.findOne({ where: { email } });
-    if (findExistEmployee) {
-      return res.status(409).json({
-        status: 409,
-        message: "Employee is already exists with this Email",
-      });
-    }
+    // if ([name, email, age, salary, password].some((data) => data.trim() === "")) {
+    //   return res.status(409).json({
+    //     status: 409,
+    //     message: "All fielda are required",
+    //   });
+    // }
+    // const findExistEmployee = await CrudUser.findOne({ where: { email } });
+    // if (findExistEmployee) {
+    //   return res.status(409).json({
+    //     status: 409,
+    //     message: "Employee is already exists with this Email",
+    //   });
+    // }
 
     //-1
     // with instance
@@ -58,13 +58,23 @@ const addEmployee = async (req, res) => {
 
     //-8
     // with create method
-    const createEmployee = await Employee.create(
-      { name, email, age, salary , password}
+    const createEmployee = await CrudUser.create(
+      { name, email, age, salary, password}
       //   {
       //     fields: ["email", "age"]
       //   }
     );
 
+    // paranoid 
+    await CrudUser.destroy({
+      where:{id:1},
+    })
+
+    // await CrudUser.restore({
+    //   where: {
+    //     id: 1
+    //   },
+    // });
     // const incrementData = await createEmployee.increment("age", {by: 2})
 
     //--9
@@ -84,7 +94,7 @@ const addEmployee = async (req, res) => {
       data: createEmployee,
     });
   } catch (error) {
-    console.log("Error in addEmployee", error);
+    console.log("Error in add Api", error);
     return res.status(500).json({
       status: 500,
       message: "Internal server error",
@@ -180,4 +190,4 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { addEmployee, getAll };
+module.exports = { add, getAll };
