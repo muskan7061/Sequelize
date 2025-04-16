@@ -65,16 +65,16 @@ const add = async (req, res) => {
       //   }
     );
 
-    // paranoid 
-    await CrudUser.destroy({
-      where:{id:1},
-    })
+    //paranoid 
+    // await CrudUser.destroy({
+    //   where:{id:2},
+    // })
 
-    // await CrudUser.restore({
-    //   where: {
-    //     id: 1
-    //   },
-    // });
+    await CrudUser.restore({
+      where: {
+        id: 2
+      },
+    });
     // const incrementData = await createEmployee.increment("age", {by: 2})
 
     //--9

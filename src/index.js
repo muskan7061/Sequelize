@@ -19,7 +19,7 @@ app.use("/api/v1/raw", rawRouter )
 
 sequelize.sync({ alter: true })
 .then(() =>{
-    console.log("Sync successfully")
+    console.log("Sync successfully") 
 
 })
 .catch((error) =>{
