@@ -9,7 +9,12 @@ Baisc.init(
         name:{
             type:DataTypes.STRING,
             allowNull: false
-        }
+        },
+        age:{
+            type:DataTypes.INTEGER,
+            allowNull: false
+        },
+
     }, 
    
     {
