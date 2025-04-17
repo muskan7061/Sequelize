@@ -98,7 +98,42 @@ const finderMethod = async (req, res) => {
       // where: {
       //   age: { [Op.between]: [20, 30]},
       // },
-      
+
+      //13 like and notLike
+      //supported in PostgreSQL, not in MySQL or MariaDB.
+      // where: {
+      //   name: { [Op.notLike]: '%a'},
+      // },
+
+      //14 strat and end with
+      // where: {
+      //   name: { [Op.endsWith]: 'jones'},
+      // },
+
+      //15 substring and ilike and notILike
+      // where: {
+      //   name: { [Op. iLike]: '%hat', collation: 'utf8_general_ci'}
+      // },
+
+      //16 regexp  and notRegexp iRegexp notIRegexp
+      //   where: {
+      //   name: { [Op.notRegexp]: 'jones'},
+      // },
+
+      //17 any
+      //supported in PostgreSQL, not in MySQL or MariaDB.
+      // where: {
+      //   id: { [Op.any]: [2,3] },
+      // },
+
+      //18 createdAt
+      // where:{
+      //   createdAt: { [Op.gt] : new Date() }
+      // }
+
+      //19
+
+
     });
     return res.status(200).json({
       data: basicQueries,
