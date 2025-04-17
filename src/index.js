@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 const sequelize = require("./config/db")
 const curdUserRouter = require("./routes/crudUsers.route")
 const rawRouter = require("./routes/raw.route")
+const basicRouter = require("./routes/basic.route")
 dotenv.config({path: "./.env"})
 const app = express()
 
@@ -17,15 +18,17 @@ app.use("/crud-user", curdUserRouter)
 
 app.use("/api/v1/raw", rawRouter )
 
-sequelize.sync({ alter: true })
-.then(() =>{
-    console.log("Sync successfully") 
+app.use("/basic", basicRouter)
 
-})
-.catch((error) =>{
-    console.log("sync Failed", error)
+// sequelize.sync({ alter: true })
+// .then(() =>{
+//     console.log("Sync successfully") 
+
+// })
+// .catch((error) =>{
+//     console.log("sync Failed", error)
     
-})
+// })
 
 app.listen(process.env.PORT, () =>{
     console.log("App is listing on", process.env.PORT);
